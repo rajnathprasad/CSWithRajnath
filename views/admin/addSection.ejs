@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<div class="admin-container">
+
+    <div class="admin-header">
+        <h1>Add Section</h1>
+        <a href="/admin/sections" class="back-btn">Back</a>
+    </div>
+
+    <% if (error) { %>
+        <p class="error"><%= error %></p>
+    <% } %>
+
+    <form action="/admin/sections/add" method="POST">
+
+        <div class="form-group">
+            <label>Class</label>
+            <select name="classNumber" required>
+                <option value="">Select Class</option>
+                <option value="11">Class 11</option>
+                <option value="12">Class 12</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Section Title</label>
+            <input
+                type="text"
+                name="title"
+                placeholder="e.g. Chapterwise Lectures"
+                required
+            />
+        </div>
+
+        <div class="form-group">
+            <label>Slug (URL)</label>
+            <input
+                type="text"
+                name="slug"
+                placeholder="e.g. lectures, notes, short-notes"
+                required
+            />
+            <small>
+                Used in URL: <code>/class/12/slug</code>
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label>Type</label>
+            <select name="type" required>
+                <option value="">Select Type</option>
+                <option value="video">Video</option>
+                <option value="pdf">PDF</option>
+                <option value="project">Project</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea
+                name="description"
+                placeholder="Short description for students"
+            ></textarea>
+        </div>
+
+        <button type="submit" class="btn">Add Section</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

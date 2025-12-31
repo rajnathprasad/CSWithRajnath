@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<div class="admin-container">
+
+    <div class="admin-header">
+        <h1>Admin Dashboard</h1>
+        <a href="/admin/logout" class="logout-btn">Logout</a>
+    </div>
+
+    <div class="admin-grid">
+
+        <div class="admin-card">
+            <h3>Manage Sections</h3>
+            <p>Add / edit sections for Class 11 & 12</p>
+            <a href="/admin/sections" class="admin-link">Open</a>
+        </div>
+
+        <div class="admin-card">
+            <h3>Manage Content</h3>
+            <p>Add videos, notes, PDFs</p>
+            <a href="/admin/content/add" class="admin-link">Open</a>
+        </div>
+
+        <div class="admin-card">
+            <h3>Manage Projects</h3>
+            <p>Add project videos & ZIP files</p>
+            <a href="/admin/projects" class="admin-link">Open</a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

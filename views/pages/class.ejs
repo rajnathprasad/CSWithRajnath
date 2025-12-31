@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/class.css">
+</head>
+<body>
+
+<%- include("../layouts/header") %>
+
+<main class="container">
+
+    <section class="class-header">
+        <h1>Class <%= classNumber %> Computer Science</h1>
+        <p>Select a section to start learning</p>
+    </section>
+
+    <section class="sections-grid">
+
+        <% if (sections.length === 0) { %>
+            <p>No sections added yet.</p>
+        <% } %>
+
+        <% sections.forEach(section => { %>
+            <a 
+                href="/class/<%= classNumber %>/<%= section.slug %>" 
+                class="section-card <%= section.slug === 'projects' ? 'highlight' : '' %>"
+            >
+                <h3><%= section.title %></h3>
+                <p><%= section.description || '' %></p>
+            </a>
+        <% }) %>
+
+    </section>
+
+</main>
+
+<%- include("../layouts/footer") %>
+
+</body>
+</html>
