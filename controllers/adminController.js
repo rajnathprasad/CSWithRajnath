@@ -1,5 +1,5 @@
-const Content = require("../models/content");
-const Section = require("../models/section");
+const Content = require("../models/Content");
+const Section = require("../models/Section");
 const Project = require("../models/Project");
 
 //AUTH

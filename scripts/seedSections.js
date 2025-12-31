@@ -2,7 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 const connectDB = require("../config/db");
-const Section = require("../models/section");
+const Section = require("../models/Section");
 
 const seedSections = async () => {
     try {
