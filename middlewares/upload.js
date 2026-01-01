@@ -24,6 +24,8 @@ const storage = new CloudinaryStorage({
         return {
             folder,
             resource_type: resourceType,
+            type: "upload",
+            access_mode: "public",
             public_id: `${Date.now()}-${file.originalname}`
         };
     }
