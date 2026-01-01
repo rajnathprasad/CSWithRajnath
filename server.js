@@ -36,8 +36,18 @@ app.set("views", path.join(__dirname, "views"));
 // Routes
 app.use("/", publicRoutes);
 app.use("/admin", adminRoutes);
+app.use((err, req, res, next) => {
+    console.error("UPLOAD ERROR:", err);
+
+    if (err.code === "LIMIT_FILE_SIZE") {
+        return res.status(400).send("File too large");
+    }
+
+    return res.status(500).send("Upload failed");
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
+
