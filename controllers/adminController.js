@@ -188,7 +188,7 @@ exports.handleAddProject = async (req, res) => {
         await Project.create({
             title,
             videoUrl,
-            zipUrl: req.file.path, // Cloudinary URL
+            zipUrl: req.file.secure_url || req.file.path, // Cloudinary URL
             order: order || 0
         });
 
