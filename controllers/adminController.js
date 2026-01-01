@@ -184,7 +184,17 @@ exports.handleAddProject = async (req, res) => {
                 error: "All fields are required"
             });
         }
-
+        console.log("=== PROJECT UPLOAD DEBUG ===");
+        console.log({
+            hasFile: !!req.file,
+            fileKeys: req.file ? Object.keys(req.file) : null,
+            originalname: req.file?.originalname,
+            mimetype: req.file?.mimetype,
+            path: req.file?.path,
+            secure_url: req.file?.secure_url,
+            fullFile: req.file
+        });
+        console.log("=== END DEBUG ===");
         await Project.create({
             title,
             videoUrl,
