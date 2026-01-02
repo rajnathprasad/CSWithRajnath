@@ -22,8 +22,7 @@ const storage = new CloudinaryStorage({
         }
 
         return {
-            folder,
-            resource_type: resourceType,
+            resource_type: "raw",
             upload_preset: "public_raw",
             public_id: `${Date.now()}-${file.originalname}`
         };
