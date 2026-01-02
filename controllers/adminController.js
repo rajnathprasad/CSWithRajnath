@@ -44,12 +44,24 @@ exports.renderDashboard = (req, res) => {
 
 //CONTENT
 
-exports.renderAddContent = (req, res) => {
-    res.render("admin/addContent", {
-        title: "Add Content | CSWithRajnath",
-        error: null
-    });
+exports.renderAddContent = async (req, res) => {
+    try {
+        const sections = await Section.find().sort({
+            classNumber: 1,
+            title: 1
+        });
+
+        res.render("admin/addContent", {
+            title: "Add Content | CSWithRajnath",
+            error: null,
+            sections
+        });
+    } catch (err) {
+        console.error("ADD CONTENT PAGE ERROR:", err);
+        res.redirect("/admin/dashboard");
+    }
 };
+
 
 exports.handleAddContent = async (req, res) => {
     try {
