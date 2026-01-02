@@ -1,103 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
 
-    <link rel="stylesheet" href="/css/base.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/class.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/class.css" />
+  </head>
+  <body>
+    <%- include("../layouts/header") %>
 
-<%- include("../layouts/header") %>
-
-<main class="container">
-
-    <section class="section-header">
+    <main class="container">
+      <section class="section-header">
         <h1><%= title.toUpperCase() %></h1>
         <p>Class <%= classNumber %> Computer Science</p>
-    </section>
+      </section>
 
-    <!-- ================= VIDEOS ================= -->
-    <% if (contents && contents.length > 0) { %>
-        <section class="content-grid">
+      <!-- ================= VIDEOS ================= -->
+      <% if (contents && contents.length > 0) { %>
+      <section class="content-grid">
+        <% contents.forEach(item => { %> <% if (item.contentType === "video") {
+        %> <% let embedUrl = item.videoUrl; // Case 1: normal YouTube link if
+        (embedUrl.includes("watch?v=")) { embedUrl =
+        embedUrl.replace("watch?v=", "embed/"); } // Case 2: short youtu.be link
+        if (embedUrl.includes("youtu.be/")) { const videoId =
+        embedUrl.split("youtu.be/")[1].split("?")[0]; embedUrl =
+        "https://www.youtube.com/embed/" + videoId; } %>
 
-            <% contents.forEach(item => { %>
+        <div class="content-card video-card">
+          <iframe
+            src="<%= embedUrl %>"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          >
+          </iframe>
 
-                <% if (item.contentType === "video") { %>
-                    <div class="content-card video-card">
-                        <iframe 
-                            src="<%= item.videoUrl.replace('watch?v=', 'embed/') %>" 
-                            frameborder="0"
-                            allowfullscreen>
-                        </iframe>
+          <h3><%= item.title %></h3>
+          <p><%= item.description || "" %></p>
+        </div>
 
-                        <h3><%= item.title %></h3>
-                        <p><%= item.description || "" %></p>
-                    </div>
-                <% } %>
+        <% } %> <% if (item.contentType === "pdf") { %>
+        <div class="content-card pdf-card">
+          <h3><%= item.title %></h3>
+          <p><%= item.description || "" %></p>
+          <a href="<%= item.fileUrl %>" target="_blank" class="btn">
+            Download PDF
+          </a>
+        </div>
+        <% } %> <% }) %>
+      </section>
+      <% } %>
 
-                <% if (item.contentType === "pdf") { %>
-                    <div class="content-card pdf-card">
-                        <h3><%= item.title %></h3>
-                        <p><%= item.description || "" %></p>
-                        <a href="<%= item.fileUrl %>" target="_blank" class="btn">
-                            Download PDF
-                        </a>
-                    </div>
-                <% } %>
+      <!-- ================= PROJECTS ================= -->
+      <% if (projects && projects.length > 0) { %>
 
-            <% }) %>
+      <section class="projects-section">
+        <!-- Fixed intro videos (you can move these to DB later) -->
+        <div class="content-card video-card">
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID_PROJECT_OVERVIEW"
+          ></iframe>
+          <h3>All About Projects & Synopsis</h3>
+        </div>
 
-        </section>
-    <% } %>
+        <div class="content-card video-card">
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID_PROJECT_CREATION"
+          ></iframe>
+          <h3>Create Project on Any Topic</h3>
+        </div>
 
-    <!-- ================= PROJECTS ================= -->
-    <% if (projects && projects.length > 0) { %>
+        <hr />
 
-        <section class="projects-section">
+        <% projects.forEach(project => { %>
+        <div class="project-row">
+          <a href="<%= project.videoUrl %>" target="_blank">
+            Video Explanation
+          </a>
 
-            <!-- Fixed intro videos (you can move these to DB later) -->
-            <div class="content-card video-card">
-                <iframe src="https://www.youtube.com/embed/VIDEO_ID_PROJECT_OVERVIEW"></iframe>
-                <h3>All About Projects & Synopsis</h3>
-            </div>
+          <span><%= project.title %></span>
 
-            <div class="content-card video-card">
-                <iframe src="https://www.youtube.com/embed/VIDEO_ID_PROJECT_CREATION"></iframe>
-                <h3>Create Project on Any Topic</h3>
-            </div>
+          <a href="<%= project.zipUrl %>" target="_blank"> Download ZIP </a>
+        </div>
+        <% }) %>
+      </section>
 
-            <hr />
+      <% } %>
 
-            <% projects.forEach(project => { %>
-                <div class="project-row">
-                    <a href="<%= project.videoUrl %>" target="_blank">
-                        Video Explanation
-                    </a>
+      <!-- ================= EMPTY STATE ================= -->
+      <% if ((!contents || contents.length === 0) && (!projects ||
+      projects.length === 0)) { %>
+      <p>No content available yet.</p>
+      <% } %>
+    </main>
 
-                    <span><%= project.title %></span>
-
-                    <a href="<%= project.zipUrl %>" target="_blank">
-                        Download ZIP
-                    </a>
-                </div>
-            <% }) %>
-
-        </section>
-
-    <% } %>
-
-    <!-- ================= EMPTY STATE ================= -->
-    <% if ((!contents || contents.length === 0) && (!projects || projects.length === 0)) { %>
-        <p>No content available yet.</p>
-    <% } %>
-
-</main>
-
-<%- include("../layouts/footer") %>
-
-</body>
+    <%- include("../layouts/footer") %>
+  </body>
 </html>
