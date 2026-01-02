@@ -23,6 +23,7 @@
 
     <form action="/admin/content/add" method="POST" enctype="multipart/form-data">
 
+        <!-- Class -->
         <div class="form-group">
             <label>Class</label>
             <select name="classNumber" required>
@@ -32,28 +33,32 @@
             </select>
         </div>
 
+        <!-- Section (DYNAMIC, CORRECT) -->
         <div class="form-group">
             <label>Section</label>
             <select name="sectionSlug" required>
                 <option value="">Select Section</option>
-                <option value="lectures">Chapterwise Lectures</option>
-                <option value="quick-revision">Quick Revision</option>
-                <option value="programming-practice">Programming Practice</option>
-                <option value="notes">Notes</option>
-                <option value="short-notes">Short Notes</option>
+                <% sections.forEach(section => { %>
+                    <option value="<%= section.slug %>">
+                        Class <%= section.classNumber %> – <%= section.title %>
+                    </option>
+                <% }) %>
             </select>
         </div>
 
+        <!-- Title -->
         <div class="form-group">
             <label>Title</label>
             <input type="text" name="title" required />
         </div>
 
+        <!-- Description -->
         <div class="form-group">
             <label>Description</label>
             <textarea name="description"></textarea>
         </div>
 
+        <!-- Content Type -->
         <div class="form-group">
             <label>Content Type</label>
             <select name="contentType" required>
@@ -63,16 +68,19 @@
             </select>
         </div>
 
+        <!-- Video URL -->
         <div class="form-group">
             <label>YouTube Video URL</label>
             <input type="url" name="videoUrl" placeholder="https://www.youtube.com/watch?v=..." />
         </div>
 
+        <!-- PDF Upload -->
         <div class="form-group">
             <label>Upload PDF (for Notes)</label>
             <input type="file" name="file" accept="application/pdf" />
         </div>
 
+        <!-- Order -->
         <div class="form-group">
             <label>Order (optional)</label>
             <input type="number" name="order" />
