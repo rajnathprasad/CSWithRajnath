@@ -42,15 +42,38 @@
           <p><%= item.description || "" %></p>
         </div>
 
-        <% } %> <% if (item.contentType === "pdf") { %>
-        <div class="content-card pdf-card">
-          <h3><%= item.title %></h3>
-          <p><%= item.description || "" %></p>
-          <a href="<%= item.fileUrl %>" target="_blank" class="btn">
-            Download PDF
-          </a>
-        </div>
-        <% } %> <% }) %>
+        <% if (item.contentType === "video") { %>
+
+    <%
+        let embedUrl = "";
+
+        if (item.videoUrl.includes("youtu.be/")) {
+            embedUrl =
+                "https://www.youtube.com/embed/" +
+                item.videoUrl.split("youtu.be/")[1].split(/[?&]/)[0];
+        } else if (item.videoUrl.includes("watch?v=")) {
+            embedUrl =
+                "https://www.youtube.com/embed/" +
+                item.videoUrl.split("watch?v=")[1].split(/[?&]/)[0];
+        } else if (item.videoUrl.includes("embed/")) {
+            embedUrl = item.videoUrl;
+        }
+    %>
+
+    <div class="content-card video-card">
+        <iframe
+            src="<%= embedUrl %>"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+
+        <h3><%= item.title %></h3>
+        <p><%= item.description || "" %></p>
+    </div>
+
+<% } %>
+
       </section>
       <% } %>
 
