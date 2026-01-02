@@ -1,6 +1,7 @@
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("../config/cloudinary");
+const path = require("path");
 
 // Cloudinary storage configuration
 const storage = new CloudinaryStorage({
@@ -8,7 +9,7 @@ const storage = new CloudinaryStorage({
     params: async (req, file) => {
         let folder = "cswithrajnath/others";
 
-        // Decide folder based on file type
+
         if (file.mimetype === "application/pdf") {
             folder = "cswithrajnath/pdfs";
         }
@@ -20,12 +21,15 @@ const storage = new CloudinaryStorage({
             folder = "cswithrajnath/zips";
         }
 
+
+        const extension = path.extname(file.originalname);
+        const nameWithoutExtension = file.originalname.replace(/\.[^/.]+$/, '');
+
         return {
             folder: folder,
             resource_type: "raw",
             access_mode: "public",
-            public_id: `${file.originalname.replace(/\\[^/]+$/, '')}`, 
-
+            public_id: `${Date.now()}-${nameWithoutExtension}${extension}`, 
         };
     }
 });
