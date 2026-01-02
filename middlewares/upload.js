@@ -20,11 +20,16 @@ const storage = new CloudinaryStorage({
             folder = "cswithrajnath/zips";
         }
 
+        // Extract file extension
+        const fileExtension = file.originalname.split('.').pop();
+        const fileNameWithoutExt = file.originalname.replace(/\.[^/.]+$/, '');
+
         return {
             folder: folder,
             resource_type: "raw",
             access_mode: "public",
-            public_id: `${Date.now()}-${file.originalname.replace(/\.[^/.]+$/, '')}`,
+            public_id: `${Date.now()}-${fileNameWithoutExt}`, // Without extension
+            format: fileExtension, // ← ADD THIS - Cloudinary appends it
         };
     }
 });
@@ -35,7 +40,6 @@ const upload = multer({
         fileSize: 10 * 1024 * 1024 // 10 MB limit
     },
     fileFilter: (req, file, cb) => {
-
         const allowedTypes = [
             'application/pdf',
             'application/zip', 
