@@ -20,7 +20,7 @@ const storage = new CloudinaryStorage({
             folder = "cswithrajnath/zips";
         }
 
-        // Extract file extension
+
         const fileExtension = file.originalname.split('.').pop();
         const fileNameWithoutExt = file.originalname.replace(/\.[^/.]+$/, '');
 
@@ -28,8 +28,8 @@ const storage = new CloudinaryStorage({
             folder: folder,
             resource_type: "raw",
             access_mode: "public",
-            public_id: `${Date.now()}-${fileNameWithoutExt}`, // Without extension
-            format: fileExtension, // ← ADD THIS - Cloudinary appends it
+            public_id: `${Date.now()}-${fileNameWithoutExt}`,
+            format: fileExtension,
         };
     }
 });
