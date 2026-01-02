@@ -6,31 +6,9 @@ const path = require("path");
 // Cloudinary storage configuration
 const storage = new CloudinaryStorage({
     cloudinary,
-    params: async (req, file) => {
-        let folder = "cswithrajnath/others";
-
-
-        if (file.mimetype === "application/pdf") {
-            folder = "cswithrajnath/pdfs";
-        }
-
-        if (
-            file.mimetype === "application/zip" ||
-            file.mimetype === "application/x-zip-compressed"
-        ) {
-            folder = "cswithrajnath/zips";
-        }
-
-
-        const extension = path.extname(file.originalname);
-        const nameWithoutExtension = file.originalname.replace(/\.[^/.]+$/, '');
-
-        return {
-            folder: folder,
-            resource_type: "raw",
-            access_mode: "public",
-            public_id: `${Date.now()}-${nameWithoutExtension}${extension}`, 
-        };
+    params: {
+        upload_preset: "public_raw", 
+        resource_type: "raw"
     }
 });
 
