@@ -24,7 +24,7 @@ const storage = new CloudinaryStorage({
             folder: folder,
             resource_type: "raw",
             access_mode: "public",
-            public_id: `${Date.now()}-${file.originalname}`, 
+            public_id: `${file.originalname.replace(/\\[^/]+$/, '')}`, 
 
         };
     }
