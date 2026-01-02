@@ -7,7 +7,6 @@ const storage = new CloudinaryStorage({
     cloudinary,
     params: async (req, file) => {
         let folder = "cswithrajnath/others";
-        let resourceType = "raw";
 
         // Decide folder based on file type
         if (file.mimetype === "application/pdf") {
@@ -22,9 +21,10 @@ const storage = new CloudinaryStorage({
         }
 
         return {
+            folder: folder,
             resource_type: "raw",
-            upload_preset: "public_raw",
-            public_id: `${Date.now()}-${file.originalname}`
+            access_mode: "public",
+            public_id: `${Date.now()}-${file.originalname.replace(/\.[^/.]+$/, '')}`,
         };
     }
 });
@@ -33,6 +33,20 @@ const upload = multer({
     storage,
     limits: {
         fileSize: 10 * 1024 * 1024 // 10 MB limit
+    },
+    fileFilter: (req, file, cb) => {
+
+        const allowedTypes = [
+            'application/pdf',
+            'application/zip', 
+            'application/x-zip-compressed'
+        ];
+        
+        if (allowedTypes.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Only PDF and ZIP files are allowed'), false);
+        }
     }
 });
 
